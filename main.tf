@@ -4,6 +4,6 @@ provider "helm" {
   }
 }
 
-module "kafka" {
-  source = "./kafka"
+module "mqu-kafka" {
+  source = "./mqu-kafka"
 }
