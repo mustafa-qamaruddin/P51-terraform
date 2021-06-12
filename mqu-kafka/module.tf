@@ -12,7 +12,22 @@ resource "kubernetes_persistent_volume" "kafka_pv" {
     capacity = {
       storage = "1Gi"
     }
-    access_modes = ["ReadWriteOnce"]
+    access_modes = [
+      "ReadWriteOnce"
+    ]
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key = "kubernetes.io/hostname"
+            operator = "In"
+            values = [
+              "minikube"
+            ]
+          }
+        }
+      }
+    }
     persistent_volume_source {
       local {
         path = "/bitnami/kafka"
@@ -29,7 +44,22 @@ resource "kubernetes_persistent_volume" "zookeeper_pv" {
     capacity = {
       storage = "1Gi"
     }
-    access_modes = ["ReadWriteOnce"]
+    access_modes = [
+      "ReadWriteOnce"
+    ]
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key = "kubernetes.io/hostname"
+            operator = "In"
+            values = [
+              "minikube"
+            ]
+          }
+        }
+      }
+    }
     persistent_volume_source {
       local {
         path = "/bitnami/zookeeper"
