@@ -4,70 +4,6 @@ resource "kubernetes_namespace" "emmet-brown" {
   }
 }
 
-resource "kubernetes_persistent_volume" "kafka_pv" {
-  metadata {
-    name = "terraform-kafka-pv"
-  }
-  spec {
-    capacity = {
-      storage = "1Gi"
-    }
-    access_modes = [
-      "ReadWriteOnce"
-    ]
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key = "kubernetes.io/hostname"
-            operator = "In"
-            values = [
-              "minikube"
-            ]
-          }
-        }
-      }
-    }
-    persistent_volume_source {
-      local {
-        path = "/bitnami/kafka"
-      }
-    }
-  }
-}
-
-resource "kubernetes_persistent_volume" "zookeeper_pv" {
-  metadata {
-    name = "terraform-zookeeper-pv"
-  }
-  spec {
-    capacity = {
-      storage = "1Gi"
-    }
-    access_modes = [
-      "ReadWriteOnce"
-    ]
-    node_affinity {
-      required {
-        node_selector_term {
-          match_expressions {
-            key = "kubernetes.io/hostname"
-            operator = "In"
-            values = [
-              "minikube"
-            ]
-          }
-        }
-      }
-    }
-    persistent_volume_source {
-      local {
-        path = "/bitnami/zookeeper"
-      }
-    }
-  }
-}
-
 resource "helm_release" "bitnami_kafka" {
   name = "kafka-release"
   repository = "https://charts.bitnami.com/bitnami"
@@ -94,20 +30,21 @@ resource "helm_release" "bitnami_kafka" {
       offsets.topic.replication.factor = 1
       transaction.state.log.replication.factor = 1
       transaction.state.log.min.isr = 1
-      log.flush.interval.messages = 10000
+      log.flush.interval.messages = 1000
       log.flush.interval.ms = 1000
       log.retention.hours = 1
       log.retention.bytes = 1073741824
       log.segment.bytes = 1073741824
-      log.retention.check.interval.ms = 300000
-      zookeeper.connection.timeout.ms = 6000
+      log.retention.check.interval.ms = 30000
+      zookeeper.connection.timeout.ms = 60000
       group.initial.rebalance.delay.ms = 0
+      zookeeper.connect = kafka-release-zookeeper.emmet-brown.svc.cluster.local
     EOT
   }
 
   set {
     name = "heapOpts"
-    value = "-Xmx500m -Xms500m"
+    value = "-Xmx512m -Xms512m"
   }
 
   set {
@@ -122,12 +59,12 @@ resource "helm_release" "bitnami_kafka" {
 
   set {
     name = "externalAccess.enabled"
-    value = true
+    value = false
   }
 
   set {
     name = "externalAccess.autoDiscovery.enabled"
-    value = true
+    value = false
   }
 
 
