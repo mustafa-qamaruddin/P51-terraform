@@ -66,6 +66,12 @@ resource "helm_release" "bitnami_kafka" {
     value = true
   }
 
+
+  set {
+    name = "rbac.create"
+    value = true
+  }
+
   set {
     name = "persistence.enabled"
     value = true
