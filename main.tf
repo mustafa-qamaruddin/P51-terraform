@@ -15,3 +15,7 @@ module "mqu-kafka" {
 module "mqu-customers" {
   source = "./mqu-customers"
 }
+
+module "mqu-memberships" {
+  source = "./mqu-memberships"
+}

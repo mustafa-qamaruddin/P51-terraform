@@ -1,13 +1,13 @@
-resource "kubernetes_namespace" "microservices" {
+resource "kubernetes_namespace" "customers_microservices" {
   metadata {
-    name = "microservices"
+    name = "customers-microservices"
   }
 }
 
 resource "kubernetes_service" "customers" {
   metadata {
     name = "customers"
-    namespace = "microservices"
+    namespace = "customers-microservices"
   }
 
   spec {
@@ -24,7 +24,7 @@ resource "kubernetes_service" "customers" {
 resource "kubernetes_pod" "customers" {
   metadata {
     name = "customers"
-    namespace = "microservices"
+    namespace = "customers-microservices"
     labels = {
       app = "CustomersMicroservice"
     }
