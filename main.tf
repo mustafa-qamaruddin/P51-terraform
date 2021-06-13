@@ -11,3 +11,7 @@ provider "helm" {
 module "mqu-kafka" {
   source = "./mqu-kafka"
 }
+
+module "mqu-customers" {
+  source = "./mqu-customers"
+}
