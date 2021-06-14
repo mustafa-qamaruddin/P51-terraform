@@ -40,7 +40,7 @@ module "mqu-nginx" {
     module.mqu-memberships,
     module.mqu-timelines
   ]
-  customers_svc_name = module.mqu-customers.svc_name
-  memberships_svc_name = module.mqu-memberships.svc_name
-  timelines_svc_name = module.mqu-timelines.svc_name
+  customers_svc = module.mqu-customers.svc_name
+  membership_svc = module.mqu-memberships.svc_name
+  timelines_svc = module.mqu-timelines.svc_name
 }

@@ -5,37 +5,38 @@ resource "kubernetes_namespace" "ingress" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = false
   metadata {
-    name = "ingress"
-    annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
-    }
+    name = "terraform-ingress"
+    namespace = "ingress"
   }
   spec {
     rule {
-      host = "marty-mcfly.local"
       http {
         path {
+          backend {
+            service_name = var.customers_svc
+            service_port = 8080
+          }
+
           path = "/starlighter/*"
+        }
+
+        path {
           backend {
-            service_name = var.customers_svc_name
+            service_name = var.membership_svc
             service_port = 8080
           }
-        }
-        path {
+
           path = "/strickland/*"
-          backend {
-            service_name = var.memberships_svc_name
-            service_port = 8080
-          }
         }
+
         path {
-          path = "/clocktower/*"
           backend {
-            service_name = var.timelines_svc_name
+            service_name = var.timelines_svc
             service_port = 8080
           }
+
+          path = "/clocktower/*"
         }
       }
     }
