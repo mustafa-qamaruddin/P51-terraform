@@ -19,8 +19,4 @@ resource "helm_release" "nginx" {
     name = "service.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
     value = "marty-mcfly.local"
   }
-  set {
-    name = "containerPorts.http"
-    value = 80
-  }
 }
