@@ -19,3 +19,7 @@ module "mqu-customers" {
 module "mqu-memberships" {
   source = "./mqu-memberships"
 }
+
+module "mqu-timelines" {
+  source = "./mqu-timelines"
+}
