@@ -23,3 +23,7 @@ module "mqu-memberships" {
 module "mqu-timelines" {
   source = "./mqu-timelines"
 }
+
+module "mqu-nginx" {
+  source = "./mqu-nginx"
+}

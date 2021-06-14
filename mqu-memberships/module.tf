@@ -32,7 +32,7 @@ resource "kubernetes_pod" "memberships" {
 
   spec {
     container {
-      image = "mqu89/emmet-brown-memberships:v0"
+      image = "mqu89/emmet-brown-memberships:v1"
       name = "memberships"
     }
   }
