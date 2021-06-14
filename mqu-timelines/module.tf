@@ -39,7 +39,7 @@ resource "kubernetes_pod" "timelines" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = false
+  wait_for_load_balancer = true
   metadata {
     name = "ingress"
     namespace = "timelines-microservices"
