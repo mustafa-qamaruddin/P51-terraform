@@ -1,44 +1,26 @@
 resource "kubernetes_namespace" "ingress" {
   metadata {
-    name = "ingress"
+    name = "sherman-peabody"
   }
 }
 
-resource "kubernetes_ingress" "ingress" {
-  metadata {
-    name = "terraform-ingress"
-    namespace = "ingress"
+resource "helm_release" "nginx" {
+  name = "nginx-release"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart = "nginx"
+  version = "9.1.0"
+  namespace = "sherman-peabody"
+
+  set {
+    name = "clusterDomain"
+    value = "cluster.local"
   }
-  spec {
-    rule {
-      http {
-        path {
-          backend {
-            service_name = var.customers_svc
-            service_port = 8080
-          }
-
-          path = "/starlighter/*"
-        }
-
-        path {
-          backend {
-            service_name = var.membership_svc
-            service_port = 8080
-          }
-
-          path = "/strickland/*"
-        }
-
-        path {
-          backend {
-            service_name = var.timelines_svc
-            service_port = 8080
-          }
-
-          path = "/clocktower/*"
-        }
-      }
-    }
+  set {
+    name = "service.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
+    value = "marty-mcfly.local"
+  }
+  set {
+    name = "containerPorts.http"
+    value = 80
   }
 }
