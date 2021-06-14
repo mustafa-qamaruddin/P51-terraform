@@ -39,7 +39,7 @@ resource "kubernetes_pod" "customers" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = true
+  wait_for_load_balancer = false
   metadata {
     name = "ingress"
     namespace = "customers-microservices"
@@ -49,10 +49,9 @@ resource "kubernetes_ingress" "ingress" {
   }
   spec {
     rule {
-      host = "marty-mcfly.local"
       http {
         path {
-          path = "/starlighter/*"
+          path = "/"
           backend {
             service_name = kubernetes_service.customers.metadata[0].name
             service_port = 8080

@@ -39,7 +39,7 @@ resource "kubernetes_pod" "memberships" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = true
+  wait_for_load_balancer = false
   metadata {
     name = "ingress"
     namespace = "memberships-microservices"
@@ -49,7 +49,6 @@ resource "kubernetes_ingress" "ingress" {
   }
   spec {
     rule {
-      host = "marty-mcfly.local"
       http {
         path {
           path = "/strickland/*"
