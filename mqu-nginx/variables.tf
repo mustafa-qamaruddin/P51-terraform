@@ -1,11 +1,11 @@
-variable "customers_svc_name" {
+variable "customers_svc" {
   type = string
 }
 
-variable "memberships_svc_name" {
+variable "membership_svc" {
   type = string
 }
 
-variable "timelines_svc_name" {
+variable "timelines_svc" {
   type = string
 }
