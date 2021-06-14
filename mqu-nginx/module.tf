@@ -5,7 +5,7 @@ resource "kubernetes_namespace" "ingress" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = true
+  wait_for_load_balancer = false
   metadata {
     name = "ingress"
     annotations = {
@@ -14,25 +14,26 @@ resource "kubernetes_ingress" "ingress" {
   }
   spec {
     rule {
+      host = "marty-mcfly.local"
       http {
         path {
           path = "/starlighter/*"
           backend {
-            service_name = "customers"
+            service_name = var.customers_svc_name
             service_port = 8080
           }
         }
         path {
           path = "/strickland/*"
           backend {
-            service_name = "memberships"
+            service_name = var.memberships_svc_name
             service_port = 8080
           }
         }
         path {
           path = "/clocktower/*"
           backend {
-            service_name = "timelines"
+            service_name = var.timelines_svc_name
             service_port = 8080
           }
         }

@@ -37,3 +37,7 @@ resource "kubernetes_pod" "customers" {
     }
   }
 }
+
+output "svc_name" {
+  value = kubernetes_service.customers.metadata.0.name
+}

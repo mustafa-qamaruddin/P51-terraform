@@ -37,3 +37,7 @@ resource "kubernetes_pod" "timelines" {
     }
   }
 }
+
+output "svc_name" {
+  value = kubernetes_service.timelines.metadata.0.name
+}

@@ -37,3 +37,7 @@ resource "kubernetes_pod" "memberships" {
     }
   }
 }
+
+output "svc_name" {
+  value = kubernetes_service.memberships.metadata.0.name
+}
