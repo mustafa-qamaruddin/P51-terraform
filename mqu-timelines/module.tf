@@ -1,18 +1,12 @@
-resource "kubernetes_namespace" "timelines_microservices" {
-  metadata {
-    name = "timelines-microservices"
-  }
-}
-
 resource "kubernetes_service" "timelines" {
   metadata {
     name = "timelines"
-    namespace = "timelines-microservices"
+    namespace = "microservices"
   }
 
   spec {
     selector = {
-      app = kubernetes_pod.timelines.metadata.0.labels.app
+      app = kubernetes_pod.timelines.metadata.0.name
     }
     port {
       port = 8080
@@ -24,7 +18,7 @@ resource "kubernetes_service" "timelines" {
 resource "kubernetes_pod" "timelines" {
   metadata {
     name = "timelines"
-    namespace = "timelines-microservices"
+    namespace = "microservices"
     labels = {
       app = "timelinesMicroservice"
     }
@@ -39,10 +33,10 @@ resource "kubernetes_pod" "timelines" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = false
+  wait_for_load_balancer = true
   metadata {
-    name = "ingress"
-    namespace = "timelines-microservices"
+    name = "ingress-timelines"
+    namespace = "microservices"
     annotations = {
       "kubernetes.io/ingress.class" = "nginx"
     }

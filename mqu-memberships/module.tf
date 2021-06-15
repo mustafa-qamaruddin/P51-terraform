@@ -1,18 +1,12 @@
-resource "kubernetes_namespace" "memberships_microservices" {
-  metadata {
-    name = "memberships-microservices"
-  }
-}
-
 resource "kubernetes_service" "memberships" {
   metadata {
     name = "memberships"
-    namespace = "memberships-microservices"
+    namespace = "microservices"
   }
 
   spec {
     selector = {
-      app = kubernetes_pod.memberships.metadata.0.labels.app
+      app = kubernetes_pod.memberships.metadata.0.name
     }
     port {
       port = 8080
@@ -24,7 +18,7 @@ resource "kubernetes_service" "memberships" {
 resource "kubernetes_pod" "memberships" {
   metadata {
     name = "memberships"
-    namespace = "memberships-microservices"
+    namespace = "microservices"
     labels = {
       app = "membershipsMicroservice"
     }
@@ -39,10 +33,10 @@ resource "kubernetes_pod" "memberships" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = false
+  wait_for_load_balancer = true
   metadata {
-    name = "ingress"
-    namespace = "memberships-microservices"
+    name = "ingress-memberships"
+    namespace = "microservices"
     annotations = {
       "kubernetes.io/ingress.class" = "nginx"
     }

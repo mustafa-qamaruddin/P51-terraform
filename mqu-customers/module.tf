@@ -1,18 +1,12 @@
-resource "kubernetes_namespace" "customers_microservices" {
-  metadata {
-    name = "customers-microservices"
-  }
-}
-
 resource "kubernetes_service" "customers" {
   metadata {
     name = "customers"
-    namespace = "customers-microservices"
+    namespace = "microservices"
   }
 
   spec {
     selector = {
-      app = kubernetes_pod.customers.metadata.0.labels.app
+      app = kubernetes_pod.customers.metadata.0.name
     }
     port {
       port = 8080
@@ -24,7 +18,7 @@ resource "kubernetes_service" "customers" {
 resource "kubernetes_pod" "customers" {
   metadata {
     name = "customers"
-    namespace = "customers-microservices"
+    namespace = "microservices"
     labels = {
       app = "CustomersMicroservice"
     }
@@ -39,10 +33,10 @@ resource "kubernetes_pod" "customers" {
 }
 
 resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = false
+  wait_for_load_balancer = true
   metadata {
-    name = "ingress"
-    namespace = "customers-microservices"
+    name = "ingress-customers"
+    namespace = "microservices"
     annotations = {
       "kubernetes.io/ingress.class" = "nginx"
     }
