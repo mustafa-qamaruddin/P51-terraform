@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"nginx-ingress-controller","Source":"byuoitav/nginx-ingress-controller/kubernetes","Version":"0.2.1","Dir":".terraform/modules/nginx-ingress-controller"}]}

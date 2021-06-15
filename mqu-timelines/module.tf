@@ -37,31 +37,3 @@ resource "kubernetes_pod" "timelines" {
     }
   }
 }
-
-resource "kubernetes_ingress" "ingress" {
-  wait_for_load_balancer = false
-  metadata {
-    name = "ingress"
-    namespace = "timelines-microservices"
-    annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
-    }
-  }
-  spec {
-    rule {
-      http {
-        path {
-          path = "/clocktower/*"
-          backend {
-            service_name = kubernetes_service.timelines.metadata[0].name
-            service_port = 8080
-          }
-        }
-      }
-    }
-  }
-}
-
-output "svc_name" {
-  value = kubernetes_service.timelines.metadata[0].name
-}
