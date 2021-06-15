@@ -46,7 +46,14 @@ resource "kubernetes_ingress" "ingress" {
     rule {
       http {
         path {
-          path = "/strickland/*"
+          path = "/strickland/api/v1/membership"
+          backend {
+            service_name = kubernetes_service.memberships.metadata[0].name
+            service_port = 8080
+          }
+        }
+        path {
+          path = "/strickland/api/v1/membership/revoke"
           backend {
             service_name = kubernetes_service.memberships.metadata[0].name
             service_port = 8080

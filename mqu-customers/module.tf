@@ -46,7 +46,14 @@ resource "kubernetes_ingress" "ingress" {
     rule {
       http {
         path {
-          path = "/starlighter/*"
+          path = "/starlighter/api/v1/employer"  // terraform didn't apply regex correctly under nginx/conf
+          backend {
+            service_name = kubernetes_service.customers.metadata[0].name
+            service_port = 8080
+          }
+        }
+        path {
+          path = "/starlighter/api/v1/employee"
           backend {
             service_name = kubernetes_service.customers.metadata[0].name
             service_port = 8080

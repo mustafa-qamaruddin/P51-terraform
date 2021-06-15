@@ -46,7 +46,7 @@ resource "kubernetes_ingress" "ingress" {
     rule {
       http {
         path {
-          path = "/clocktower/*"
+          path = "/clocktower/api/v1/timeline"
           backend {
             service_name = kubernetes_service.timelines.metadata[0].name
             service_port = 8080
