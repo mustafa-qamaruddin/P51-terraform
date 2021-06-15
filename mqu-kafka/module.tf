@@ -67,7 +67,6 @@ resource "helm_release" "bitnami_kafka" {
     value = false
   }
 
-
   set {
     name = "rbac.create"
     value = true
