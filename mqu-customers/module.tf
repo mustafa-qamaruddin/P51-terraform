@@ -32,8 +32,32 @@ resource "kubernetes_pod" "customers" {
 
   spec {
     container {
-      image = "mqu89/george-mcfly-customers:v0"
+      image = "mqu89/george-mcfly-customers:v4"
       name = "customers"
+    }
+  }
+}
+
+resource "kubernetes_ingress" "ingress" {
+  wait_for_load_balancer = false
+  metadata {
+    name = "ingress"
+    namespace = "customers-microservices"
+    annotations = {
+      "kubernetes.io/ingress.class" = "nginx"
+    }
+  }
+  spec {
+    rule {
+      http {
+        path {
+          path = "/starlighter/*"
+          backend {
+            service_name = kubernetes_service.customers.metadata[0].name
+            service_port = 8080
+          }
+        }
+      }
     }
   }
 }

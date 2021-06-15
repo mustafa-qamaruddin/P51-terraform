@@ -37,3 +37,27 @@ resource "kubernetes_pod" "memberships" {
     }
   }
 }
+
+resource "kubernetes_ingress" "ingress" {
+  wait_for_load_balancer = false
+  metadata {
+    name = "ingress"
+    namespace = "memberships-microservices"
+    annotations = {
+      "kubernetes.io/ingress.class" = "nginx"
+    }
+  }
+  spec {
+    rule {
+      http {
+        path {
+          path = "/strickland/*"
+          backend {
+            service_name = kubernetes_service.memberships.metadata[0].name
+            service_port = 8080
+          }
+        }
+      }
+    }
+  }
+}

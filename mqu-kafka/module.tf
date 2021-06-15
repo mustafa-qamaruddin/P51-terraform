@@ -50,7 +50,7 @@ resource "helm_release" "bitnami_kafka" {
 
   set {
     name = "heapOpts"
-    value = "-Xmx512m -Xms512m"
+    value = "-Xmx1024m -Xms1024m"
   }
 
   set {
@@ -92,4 +92,7 @@ resource "helm_release" "bitnami_kafka" {
     name = "zookeeper.persistence.size"
     value = "1Gi"
   }
+
+  timeout = 600  // seconds
+
 }
