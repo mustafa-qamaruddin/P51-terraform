@@ -10,6 +10,7 @@ resource "kubernetes_service" "timelines" {
     }
     port {
       port = 8080
+      name = kubernetes_pod.timelines.metadata[0].name
     }
     type = "ClusterIP"
   }
@@ -20,7 +21,7 @@ resource "kubernetes_pod" "timelines" {
     name = "timelines"
     namespace = "microservices"
     labels = {
-      app = "timelinesMicroservice"
+      app = "timelines"
     }
   }
 

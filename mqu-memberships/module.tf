@@ -10,6 +10,7 @@ resource "kubernetes_service" "memberships" {
     }
     port {
       port = 8080
+      name = kubernetes_pod.memberships.metadata[0].name
     }
     type = "ClusterIP"
   }
@@ -20,7 +21,7 @@ resource "kubernetes_pod" "memberships" {
     name = "memberships"
     namespace = "microservices"
     labels = {
-      app = "membershipsMicroservice"
+      app = "memberships"
     }
   }
 
