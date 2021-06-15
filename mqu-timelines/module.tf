@@ -27,7 +27,7 @@ resource "kubernetes_pod" "timelines" {
 
   spec {
     container {
-      image = "mqu89/lorraine-baines-timelines:v2"
+      image = "mqu89/lorraine-baines-timelines:v3"
       name = "timelines"
     }
   }
