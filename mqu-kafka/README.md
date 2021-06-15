@@ -41,10 +41,7 @@ To create a pod that you can use as a Kafka client run the following commands:
     kubectl exec --tty -i kafka-release-client --namespace emmet-brown -- bash
 
     PRODUCER:
-        kafka-console-producer.sh \
-            
-            --broker-list kafka-release-0.kafka-release-headless.emmet-brown.svc.cluster.local:9092 \
-            --topic test
+        kafka-console-producer.sh --broker-list kafka-release-0.kafka-release-headless.emmet-brown.svc.cluster.local:9092 --topic create-timeline
 
     CONSUMER:
         kafka-console-consumer.sh \

@@ -39,6 +39,12 @@ resource "helm_release" "bitnami_kafka" {
       zookeeper.connection.timeout.ms = 60000
       group.initial.rebalance.delay.ms = 0
       zookeeper.connect = kafka-release-zookeeper.emmet-brown.svc.cluster.local
+      delivery.timeout.ms = 240000
+      max.block.ms = 480000
+      request.timeout.ms = 120000
+      transaction.timeout.ms = 120000
+      transaction.max.timeout.ms = 240000
+      batch.size = 0
     EOT
   }
 
