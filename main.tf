@@ -24,3 +24,6 @@ module "mqu-timelines" {
   source = "./mqu-timelines"
 }
 
+module "mqu-nginx" {
+  source = "./mqu-nginx"
+}
